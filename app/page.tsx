@@ -1,5 +1,5 @@
 import { link } from 'fs';
-import MealCard from './components/MealCard'
+import MealCard from './components/MealCard';
 
 interface Meal {
   id: number;
