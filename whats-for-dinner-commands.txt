@@ -1,0 +1,7 @@
+//run in locallly develop mode
+npm run dev
+
+//prisma
+npx prisma studio //run prisma studio in localhost
+npx prisma db push //push changes in schema.prisma
+npx prisma generate //generate prisma client after adding new model in schema.prisma
