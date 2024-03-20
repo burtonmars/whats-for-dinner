@@ -1,29 +1,15 @@
-import { link } from 'fs';
 import MealCard from './components/MealCard';
+import { PrismaClient } from '@prisma/client';
 
-interface Meal {
-  id: number;
-  mainTitle: string;
-  secondaryTitle: string;
-  image: string;
-  tags: string[];
-  ingredients: string[];
-  notes: string[];
+const prisma = new PrismaClient();
+
+async function fetchMeals() {
+  const meals = await prisma.meal.findMany();
+  return meals;
 }
 
-export default function Home() {
-  const meals = [] as Meal[];
-  meals.push(
-    {
-      id: 1,
-      mainTitle: 'Mac and Cheese',
-      secondaryTitle: 'baked with asparagus and breadcrumbs',
-      image: '/Mac-and-Cheese.webp',
-      tags: ['vegetarian', 'dinner', 'lunch'],
-      ingredients: ['macaroni', 'cheese', 'asparagus', 'breadcrumbs'],
-      notes: ['use a lot of cheese'],
-    }
-  );
+export default async function Home() {
+  const meals = await fetchMeals();
 
   return (
    <main>

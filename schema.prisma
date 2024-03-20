@@ -9,7 +9,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Recipe {
+model Meal {
   id        Int      @id @default(autoincrement())
   mainTitle      String
   secondaryTitle String

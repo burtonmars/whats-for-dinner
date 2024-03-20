@@ -5,10 +5,10 @@ interface MealCardProps {
     id: number;
     mainTitle: string;
     secondaryTitle: string;
-    image: string;
+    imagePath: string;
     tags: string[];
     ingredients: string[];
-    notes: string[];
+    notes: string;
 }
 
 const MealCard = (props: {meal: MealCardProps}) => {
