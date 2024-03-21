@@ -13,7 +13,8 @@
     "@prisma/client": "^5.11.0",
     "@vercel/analytics": "^1.2.2",
     "@vercel/postgres": "^0.7.2",
-    "next": "14.0.3",
+    "next": "^14.1.4",
+    "node": "^21.7.1",
     "react": "^18",
     "react-dom": "^18"
   },
