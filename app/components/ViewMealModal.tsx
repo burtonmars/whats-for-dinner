@@ -52,9 +52,7 @@ const ViewMealModal = ({ meal, saveNotes }: MealModalProps) => {
                     <textarea className="textarea textarea-bordered h-24" id='meal_modal_notes' defaultValue={meal.notes}></textarea>
                 </label>
                 <div className='flex justify-end mt-6'>
-                    <button type='submit' onClick={handleClick} className='btn btn-primary w-24'>
-                    save
-                </button>
+                    <button type='submit' onClick={handleClick} className='btn btn-primary w-24'>save</button>
                 </div>
             </div>
         </form>
