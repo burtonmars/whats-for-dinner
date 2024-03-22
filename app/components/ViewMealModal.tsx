@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface MealModalProps {
     meal: {
@@ -11,18 +11,28 @@ interface MealModalProps {
         notes: string;
     }
     saveNotes: any;
+    closeModal: () => void;
 }
 
-const ViewMealModal = ({ meal, saveNotes }: MealModalProps) => {
+const ViewMealModal = ({ meal, saveNotes, closeModal }: MealModalProps) => {
+    const [notes, setNotes] = useState(meal.notes);
+    const [saving, setSaving] = useState(false);
+
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setNotes(event.target.value);
+    };
+
     const handleClick = async () => {
-        const notes = (document.getElementById('meal_modal_notes') as HTMLTextAreaElement).value;
+        setSaving(true);
         await saveNotes(meal.id, notes);
+        setSaving(false);
+        closeModal();
     };
 
   return (
     <div className="modal-box max-w-none w-7/12">
         <form className='mb-4' method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={closeModal}>✕</button>
         </form>
         {/* todo: add image path */}
         <figure><img className='rounded-t-xl max-h-72 w-full object-cover' src={'/Mac-and-Cheese.webp'} alt={meal.mainTitle} /></figure>
@@ -30,16 +40,16 @@ const ViewMealModal = ({ meal, saveNotes }: MealModalProps) => {
         <h3 className='text-base mb-3'>{meal.secondaryTitle}</h3>
         <div className='my-3'>
             <ul>
-                {meal.tags.map((tag, index) => 
-                    <li key={index} className='badge mx-1 bg-accent border-none font-semibold'>{tag}</li>
+                {meal.tags.map((tag) => 
+                    <li key={tag} className='badge mx-1 bg-accent border-none font-semibold'>{tag}</li>
                 )}
             </ul>
         </div>
         <div className='my-3'>
             <h3 className='font-semibold'>Ingredients</h3>
             <ul className='text-sm list-disc mx-4'>
-                {meal.ingredients.map((ingredient, index) => 
-                    <li key={index} className='mx-1'>{ingredient}</li>
+                {meal.ingredients.map((ingredient) => 
+                    <li key={ingredient} className='mx-1'>{ingredient}</li>
                 )}
             </ul>
         </div>
@@ -49,15 +59,15 @@ const ViewMealModal = ({ meal, saveNotes }: MealModalProps) => {
                     <div className="label">
                         <span className="label-text">notes</span>
                     </div>
-                    <textarea className="textarea textarea-bordered h-24" id='meal_modal_notes' defaultValue={meal.notes}></textarea>
+                    <textarea className="textarea textarea-bordered h-24" id='meal_modal_notes' value={notes} onChange={handleChange}></textarea>
                 </label>
                 <div className='flex justify-end mt-6'>
-                    <button type='submit' onClick={handleClick} className='btn btn-primary w-24'>save</button>
+                    <button type='submit' onClick={handleClick} className='btn btn-primary w-24' disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
                 </div>
             </div>
         </form>
     </div>
-  );
+    );
 };
 
 export default ViewMealModal;

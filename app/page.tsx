@@ -38,8 +38,8 @@ export default async function Home() {
       <Header />
     </div>
     <div className="meals_container bg-slate-100">
-      <div className='flex flex-row justify-around'>
-        {meals.map((meal, index) => <MealCard key={index} meal={meal} saveNotes={saveNotes} />)} 
+      <div className='grid grid-cols-3'>
+        {meals.map((meal) => <MealCard key={meal.id} meal={meal} saveNotes={saveNotes} />)} 
       </div>
     </div>
    </main>
