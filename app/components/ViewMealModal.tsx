@@ -30,7 +30,7 @@ const ViewMealModal = ({ meal, saveNotes, closeModal }: MealModalProps) => {
     };
 
   return (
-    <div className="modal-box max-w-none w-7/12">
+    <div className="modal-box max-w-none w-8/12 md:w-6/12 xl:w-4/12">
         <form className='mb-4' method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={closeModal}>✕</button>
         </form>
@@ -41,7 +41,7 @@ const ViewMealModal = ({ meal, saveNotes, closeModal }: MealModalProps) => {
         <div className='my-3'>
             <ul>
                 {meal.tags.map((tag) => 
-                    <li key={tag} className='badge mx-1 bg-accent border-none font-semibold'>{tag}</li>
+                    <li key={tag} className='badge mx-1 h-6 bg-accent border-none font-semibold'>{tag}</li>
                 )}
             </ul>
         </div>
