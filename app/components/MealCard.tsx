@@ -1,23 +1,19 @@
 'use client';
 
 import React, { useState } from 'react';
+
 import ViewMealModal from './ViewMealModal';
+import { Meal } from '../lib/definitions';
 
 interface MealCardProps {
-    meal: {
-        id: number;
-        mainTitle: string;
-        secondaryTitle: string;
-        imagePath: string;
-        tags: string[];
-        ingredients: string[];
-        notes: string;
-    },
+    meal: Meal;
     saveNotes: any;
+    deleteMeal: any;
 }
 
-const MealCard = ({meal, saveNotes}: MealCardProps) => {
+const MealCard = ({meal, saveNotes, deleteMeal}: MealCardProps) => {
     const [showModal, setShowModal] = useState(false);
+    const [saving, setSaving] = useState(false);
 
     const openModal = () => {
         setShowModal(true);
@@ -25,6 +21,13 @@ const MealCard = ({meal, saveNotes}: MealCardProps) => {
 
     const closeModal = () => {
         setShowModal(false);
+    };
+        
+    const handleDelete = async () => {
+        setSaving(true);
+        await deleteMeal(meal.id);
+        setSaving(false);
+        closeModal();
     };
     
   return (
@@ -43,11 +46,10 @@ const MealCard = ({meal, saveNotes}: MealCardProps) => {
                     )}
                 </ul>
             </div>
-            <div className="card-actions justify-end">
-                <div>
-                    <button className="btn btn-secondary" onClick={openModal}>
-                        view meal
-                    </button>
+            <div className="card-actions">
+                <div className='flex w-full justify-between'>
+                    <button onClick={handleDelete} className='btn btn-outline btn-error w-24' disabled={saving}>delete</button>
+                    <button className="btn btn-secondary w-30" onClick={openModal}>view meal</button>
                     <dialog id="view_meal_modal" className="modal" open={showModal}>
                         <ViewMealModal meal={meal} saveNotes={saveNotes} closeModal={closeModal} />
                     </dialog>

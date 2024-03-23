@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" data-theme='cmyk'>
-      <body className={inter.className}>
+      <body className={`${inter.className} antialiased`}>
         {children}
         <Analytics />
       </body>

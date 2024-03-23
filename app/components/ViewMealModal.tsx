@@ -1,15 +1,9 @@
 import React, { useState } from 'react';
 
+import { Meal } from '../lib/definitions';
+
 interface MealModalProps {
-    meal: {
-        id: number;
-        mainTitle: string;
-        secondaryTitle: string;
-        imagePath: string;
-        tags: string[];
-        ingredients: string[];
-        notes: string;
-    }
+    meal: Meal;
     saveNotes: any;
     closeModal: () => void;
 }
@@ -22,7 +16,7 @@ const ViewMealModal = ({ meal, saveNotes, closeModal }: MealModalProps) => {
         setNotes(event.target.value);
     };
 
-    const handleClick = async () => {
+    const handleSave = async () => {
         setSaving(true);
         await saveNotes(meal.id, notes);
         setSaving(false);
@@ -62,7 +56,7 @@ const ViewMealModal = ({ meal, saveNotes, closeModal }: MealModalProps) => {
                     <textarea className="textarea textarea-bordered h-24" id='meal_modal_notes' value={notes} onChange={handleChange}></textarea>
                 </label>
                 <div className='flex justify-end mt-6'>
-                    <button type='submit' onClick={handleClick} className='btn btn-primary w-24' disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
+                    <button type='submit' onClick={handleSave} className='btn btn-primary w-24' disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
                 </div>
             </div>
         </form>

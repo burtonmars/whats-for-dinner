@@ -1,20 +1,12 @@
 'use server';
 
-import Header from './components/Header';
-import MealCard from './components/MealCard';
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+import Header from './components/Header';
+import MealCard from './components/MealCard';
+import { Meal } from './lib/definitions';
 
-interface Meal {
-    id: number;
-    mainTitle: string;
-    secondaryTitle: string;
-    imagePath: string;
-    tags: string[];
-    ingredients: string[];
-    notes: string;
-}
+const prisma = new PrismaClient();
 
 async function fetchMeals() {
   const meals = await prisma.meal.findMany();
@@ -60,6 +52,21 @@ async function saveNewMeal(meal: Meal): Promise<void> {
   }
 }
 
+async function deleteMeal(mealId: number): Promise<void> {
+  'use server';
+
+  try {
+      await prisma.meal.delete({
+          where: {
+              id: mealId,
+          },
+      });
+      console.log('Meal deleted successfully.');
+  } catch (error) {
+      console.error('Error deleting meal:', error);
+  }
+}
+
 export default async function Home() {
   const meals = await fetchMeals();
 
@@ -70,7 +77,7 @@ export default async function Home() {
     </div>
     <div className="flex justify-center">
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-        {meals.map((meal) => <MealCard key={meal.id} meal={meal} saveNotes={saveNotes} />)} 
+        {meals.map((meal) => <MealCard key={meal.id} meal={meal} saveNotes={saveNotes} deleteMeal={deleteMeal}/>)} 
       </div>
     </div>
    </main>

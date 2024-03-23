@@ -1,3 +1,4 @@
+import { Router } from 'next/router';
 import React, { useState } from 'react';
 
 interface AddMealModalProps { 
@@ -6,30 +7,30 @@ interface AddMealModalProps {
 }
 
 const AddMeanModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
-    const [meal, setMealData] = useState({});
-    const [saving, setSaving] = useState(false);
+  const [meal, setMealData] = useState({});
+  const [saving, setSaving] = useState(false);
 
-    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setMealData(event.target.value);
-    };
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setMealData(event.target.value);
+  };
 
-    const handleClick = async () => {
-      setSaving(true);
-      let newMeal = {
-        mainTitle: (document.getElementById('mainTitle') as HTMLInputElement)?.value,
-        secondaryTitle: (document.getElementById('secondaryTitle') as HTMLInputElement)?.value,
-        tags: (document.getElementById('tags') as HTMLInputElement)?.value.split(','),
-        ingredients: (document.getElementById('ingredients') as HTMLInputElement)?.value.split(','),
-        notes: (document.getElementById('meal_modal_notes') as HTMLInputElement)?.value,
-      }
-      await saveNewMeal(newMeal);
-      setSaving(false);
-      closeAddMealModal();
-    };
-
-    const addIngredient = () => {
-      console.log((document.getElementById('ingredient') as HTMLInputElement)?.value);
+  const handleClick = async () => {
+    setSaving(true);
+    let newMeal = {
+      mainTitle: (document.getElementById('mainTitle') as HTMLInputElement)?.value,
+      secondaryTitle: (document.getElementById('secondaryTitle') as HTMLInputElement)?.value,
+      tags: (document.getElementById('tags') as HTMLInputElement)?.value.split(','),
+      ingredients: (document.getElementById('ingredients') as HTMLInputElement)?.value.split(','),
+      notes: (document.getElementById('meal_modal_notes') as HTMLInputElement)?.value,
     }
+    await saveNewMeal(newMeal);
+    setSaving(false);
+    closeAddMealModal();
+  };
+
+  const addIngredient = () => {
+    console.log((document.getElementById('ingredient') as HTMLInputElement)?.value);
+  }
 
   return (
     <div className="modal-box shadow-2xlDark max-w-none w-9/12 md:w-7/12 xl:w-4/12 max-h-none h-5/6 lg:h-4/5">
@@ -71,7 +72,11 @@ const AddMeanModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
           <div className='flex flex-col mb-4'>
             {/* todo: add image upload functionality */}
             <label htmlFor="mealImage" className='mb-2'>image</label>
-            <input id="mealImage" type="file" className="file-input file-input-bordered file-input-secondary file-input-sm w-full max-w-xs" />
+            <input 
+              id="mealImage"
+              type="file"
+              accept=".jpg, .png, .gif, .jpeg"
+              className="file-input file-input-bordered file-input-secondary file-input-sm w-full max-w-xs" />
           </div>
           <div className='flex flex-col'>
             <label className="form-control">
