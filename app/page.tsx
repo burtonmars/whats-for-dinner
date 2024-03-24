@@ -5,13 +5,9 @@ import { PrismaClient } from '@prisma/client';
 import Header from './components/Header';
 import MealCard from './components/MealCard';
 import { Meal } from './lib/definitions';
+import { fetchMeals } from './lib/data';
 
 const prisma = new PrismaClient();
-
-async function fetchMeals() {
-  const meals = await prisma.meal.findMany();
-  return meals;
-}
 
 async function saveNotes(id: number, notes: string): Promise<void> {
   "use server";
