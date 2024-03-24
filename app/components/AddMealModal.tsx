@@ -73,13 +73,6 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
               options={mealTags}
               instanceId={useId()}
             />
-            <Select
-              closeMenuOnSelect={false}
-              components={animatedComponents}
-              isMulti
-              options={mealTags}
-              instanceId={useId()}
-            />
           </div>
           <div className='flex flex-col mb-4'>
             {/* todo: add image upload functionality */}
