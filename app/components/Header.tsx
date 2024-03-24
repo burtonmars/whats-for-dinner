@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import AddMeanModal from './AddMealModal';
+import AddMealModal from './AddMealModal';
 
 interface HeaderProps {
     saveNewMeal: any;
@@ -26,7 +26,7 @@ const Header = ({saveNewMeal}: HeaderProps) => {
                   new meal
               </button>
               <dialog id="view_meal_modal" className="modal" open={showModal}>
-                  <AddMeanModal saveNewMeal={saveNewMeal} closeAddMealModal={closeAddMealModal} />
+                  <AddMealModal saveNewMeal={saveNewMeal} closeAddMealModal={closeAddMealModal} />
               </dialog>
             </div>
           </div>

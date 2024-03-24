@@ -2,7 +2,7 @@ import React, { useId, useState } from 'react';
 import Select, { GroupBase } from 'react-select';
 import makeAnimated from 'react-select/animated';
 
-import { mealTags } from '../lib/data';
+import { mealTags } from '../lib/definitions';
 
 interface AddMealModalProps { 
   saveNewMeal: (newMeal: any) => void;
@@ -11,7 +11,7 @@ interface AddMealModalProps {
 
 const animatedComponents = makeAnimated();
 
-const AddMeanModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
+const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   const [meal, setMealData] = useState({});
   const [saving, setSaving] = useState(false);
 
@@ -73,6 +73,13 @@ const AddMeanModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
               options={mealTags}
               instanceId={useId()}
             />
+            <Select
+              closeMenuOnSelect={false}
+              components={animatedComponents}
+              isMulti
+              options={mealTags}
+              instanceId={useId()}
+            />
           </div>
           <div className='flex flex-col mb-4'>
             {/* todo: add image upload functionality */}
@@ -99,4 +106,4 @@ const AddMeanModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   );
 };
 
-export default AddMeanModal;
+export default AddMealModal;
