@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import AddMeanModal from './AddMealModal';
-import { Head } from 'next/document';
 
 interface HeaderProps {
     saveNewMeal: any;

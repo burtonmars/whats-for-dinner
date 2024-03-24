@@ -77,7 +77,7 @@ export default async function Home() {
     </div>
     <div className="flex justify-center">
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-        {meals.map((meal) => <MealCard key={meal.id} meal={meal} saveNotes={saveNotes} deleteMeal={deleteMeal}/>)} 
+        {meals.map((meal: Meal) => <MealCard key={meal.id} meal={meal} saveNotes={saveNotes} deleteMeal={deleteMeal}/>)} 
       </div>
     </div>
    </main>
