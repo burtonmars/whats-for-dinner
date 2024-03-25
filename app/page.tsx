@@ -6,6 +6,8 @@ import Header from './components/Header';
 import MealCard from './components/MealCard';
 import { Meal } from './lib/definitions';
 import { fetchMeals } from './lib/data';
+import { revalidatePath } from 'next/cache';
+import { redirect } from 'next/navigation';
 
 const prisma = new PrismaClient();
 
@@ -21,7 +23,6 @@ async function saveNotes(id: number, notes: string): Promise<void> {
               notes: notes,
           },
       });
-      console.log('Notes saved successfully.');
   } catch (error) {
       console.error('Error saving notes:', error);
   }
@@ -42,7 +43,8 @@ async function saveNewMeal(meal: Meal): Promise<void> {
               notes: meal.notes,
           },
       });
-      console.log('New meal saved successfully.');
+      revalidatePath('/');
+      redirect('/');
   } catch (error) {
       console.error('Error saving new meal:', error);
   }
@@ -57,7 +59,8 @@ async function deleteMeal(mealId: number): Promise<void> {
               id: mealId,
           },
       });
-      console.log('Meal deleted successfully.');
+      revalidatePath('/');
+      redirect('/');
   } catch (error) {
       console.error('Error deleting meal:', error);
   }
