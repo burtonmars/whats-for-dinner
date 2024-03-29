@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import Select from 'react-select';
+import Select, { MultiValue } from 'react-select';
 import makeAnimated from 'react-select/animated';
+import { useForm, SubmitHandler, Controller } from "react-hook-form"
 
-import { mealTags } from '../lib/definitions';
+import { Meal, MealTag, mealTags } from '../lib/definitions';
 
 interface AddMealModalProps { 
   saveNewMeal: (newMeal: any) => void;
@@ -11,23 +12,18 @@ interface AddMealModalProps {
 
 const animatedComponents = makeAnimated();
 
-const AddMeanModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
-  const [meal, setMealData] = useState({});
+const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
+  const [tags, setMealTags] = useState<MultiValue<MealTag>>([]);
   const [saving, setSaving] = useState(false);
+  const { register, handleSubmit } = useForm<Meal>();
 
-  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setMealData(event.target.value);
-  };
-
-  const handleClick = async () => {
+  const onSubmit: SubmitHandler<Meal> = async (newMeal: Meal) => {
     setSaving(true);
-    let newMeal = {
-      mainTitle: (document.getElementById('mainTitle') as HTMLInputElement)?.value,
-      secondaryTitle: (document.getElementById('secondaryTitle') as HTMLInputElement)?.value,
-      tags: (document.getElementById('tags') as HTMLInputElement)?.value.split(','),
-      ingredients: (document.getElementById('ingredients') as HTMLInputElement)?.value.split(','),
-      notes: (document.getElementById('meal_modal_notes') as HTMLInputElement)?.value,
-    }
+    console.log(newMeal)
+    newMeal.tags = tags.map((tag: any) => tag.value);
+    newMeal.ingredients = [''];
+    newMeal.notes = '';
+    newMeal.imagePath = '';
     await saveNewMeal(newMeal);
     setSaving(false);
     closeAddMealModal();
@@ -45,17 +41,17 @@ const AddMeanModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
         <div className="flex justify-center text-lg font-bold mb-6">
           <h1>add new meal</h1>
         </div>
-        <form action="submit">
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className='flex flex-col mb-4'>
             <label className="input input-bordered flex items-center gap-2">
               meal name
-              <input type="text" className="grow" id="mainTitle"/>
+              <input type="text" className="grow" id="mainTitle" {...register("mainTitle", { required: true, maxLength: 30 })}/>
             </label>
           </div>
           <div className='flex flex-col mb-4'>
             <label className="input input-bordered flex items-center gap-2">
               description
-              <input type="text" className="grow" id="secondaryTitle"/>
+              <input type="text" className="grow" id="secondaryTitle" {...register("secondaryTitle", { required: true, maxLength: 30 })}/>
             </label>
           </div>
           <div className='flex flex-col mb-4'>
@@ -71,6 +67,8 @@ const AddMeanModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
               components={animatedComponents}
               isMulti
               options={mealTags}
+              onChange={(tag) => setMealTags(tag as any)}
+              id='tags'
             />
           </div>
           <div className='flex flex-col mb-4'>
@@ -87,10 +85,10 @@ const AddMeanModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
                 <div className="label">
                     <span className="label-text">notes</span>
                 </div>
-                <textarea className="textarea textarea-bordered h-24" id='meal_modal_notes' onChange={handleChange}></textarea>
+                <textarea className="textarea textarea-bordered h-24" id='meal_modal_notes'></textarea>
             </label>
             <div className='flex justify-end mt-6'>
-                <button type='submit' onClick={handleClick} className='btn btn-primary w-24' disabled={saving}>{saving ? 'saving...' : 'save'}</button>
+                <button type='submit' className='btn btn-primary w-24' disabled={saving}>{saving ? 'saving...' : 'save'}</button>
             </div>
           </div>
         </form>
@@ -98,4 +96,4 @@ const AddMeanModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   );
 };
 
-export default AddMeanModal;
+export default AddMealModal;

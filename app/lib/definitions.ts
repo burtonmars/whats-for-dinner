@@ -8,24 +8,24 @@ export type Meal = {
   notes: string
 }
 
-export interface MealTag {
-  readonly label: string
-  readonly value: string
+export type MealTag = {
+  value: string
+  label: string
 }
 
-export const mealTags: readonly MealTag[] = [
-  { label: 'Dinner', value: 'dinner' },
-  { label: 'Lunch', value: 'lunch' },
-  { label: 'Vegetarian', value: 'vegetarian' },
-  { label: 'Freezer Friendly', value: 'freezer-friendly' },
-  { label: 'Quick', value: 'quick' },
-  { label: 'Budget', value: 'budget' },
-  { label: 'Healthy', value: 'healthy' },
-  { label: 'Comfort Food', value: 'comfort-food' },
-  { label: 'Dairy Free', value: 'dairy-free' },
-  { label: 'Chicken', value: 'chicken' },
-  { label: 'Beef', value: 'beef' },
-  { label: 'Pork', value: 'pork' },
-  { label: 'Fish', value: 'fish' },
-  { label: 'Pasta', value: 'pasta' },
+export const mealTags: MealTag[] = [
+  { value: 'Dinner', label: 'dinner' },
+  { value: 'Lunch', label: 'lunch' },
+  { value: 'Vegetarian', label: 'vegetarian' },
+  { value: 'Freezer Friendly', label: 'freezer-friendly' },
+  { value: 'Quick', label: 'quick' },
+  { value: 'Budget', label: 'budget' },
+  { value: 'Healthy', label: 'healthy' },
+  { value: 'Comfort Food', label: 'comfort-food' },
+  { value: 'Dairy Free', label: 'dairy-free' },
+  { value: 'Chicken', label: 'chicken' },
+  { value: 'Beef', label: 'beef' },
+  { value: 'Pork', label: 'pork' },
+  { value: 'Fish', label: 'fish' },
+  { value: 'Pasta', label: 'pasta' },
 ]
