@@ -15,23 +15,32 @@ const animatedComponents = makeAnimated();
 const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   const [tags, setMealTags] = useState<MultiValue<MealTag>>([]);
   const [saving, setSaving] = useState(false);
+  const [newMealIngredients, setNewMealIngredients] = useState<string[]>([]);
+  const [notes, setNotes] = useState('');
   const { register, handleSubmit } = useForm<Meal>();
 
   const onSubmit: SubmitHandler<Meal> = async (newMeal: Meal) => {
     setSaving(true);
-    console.log(newMeal)
     newMeal.tags = tags.map((tag: any) => tag.value);
-    newMeal.ingredients = [''];
-    newMeal.notes = '';
+    newMeal.ingredients = newMealIngredients;
+    newMeal.notes = notes;
     newMeal.imagePath = '';
     await saveNewMeal(newMeal);
     setSaving(false);
     closeAddMealModal();
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setNotes(event.target.value);
+    };
+
   const addIngredient = () => {
-    console.log((document.getElementById('ingredient') as HTMLInputElement)?.value);
-  }
+    const ingredientInput = document.getElementById('ingredient') as HTMLInputElement;
+    if (ingredientInput && ingredientInput.value.trim() !== '') {
+      setNewMealIngredients([...newMealIngredients, ingredientInput.value]);
+      ingredientInput.value = '';
+    }
+  };
 
   return (
     <div className="modal-box shadow-2xlDark max-w-none w-9/12 md:w-7/12 xl:w-4/12 max-h-none h-5/6 lg:h-4/5">
@@ -56,10 +65,16 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
           </div>
           <div className='flex flex-col mb-4'>
             <label className="input input-bordered flex items-center gap-2">
-              ingredient
+              ingredients
               <input type="text" className="grow" id="ingredient"/>
-              <button className='btn btn-accent btn-sm' onClick={addIngredient}>add</button>
+              <button type='button' className='btn btn-accent btn-sm' onClick={addIngredient}>add</button>
             </label>
+            <div>
+              <ul>
+                {newMealIngredients.map((ingredient, index) => 
+                  <li key={index}>{ingredient}</li>)}
+              </ul>
+            </div>
           </div>
           <div className='flex flex-col mb-4'>
             <Select
@@ -85,7 +100,7 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
                 <div className="label">
                     <span className="label-text">notes</span>
                 </div>
-                <textarea className="textarea textarea-bordered h-24" id='meal_modal_notes'></textarea>
+                <textarea className="textarea textarea-bordered h-24" id='meal_modal_notes' onChange={handleChange}></textarea>
             </label>
             <div className='flex justify-end mt-6'>
                 <button type='submit' className='btn btn-primary w-24' disabled={saving}>{saving ? 'saving...' : 'save'}</button>
