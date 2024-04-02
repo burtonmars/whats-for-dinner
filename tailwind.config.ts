@@ -16,6 +16,9 @@ const config: Config = {
       boxShadow: {
         '2xlDark': '0 35px 60px -15px rgba(0, 0, 0, 0.6)',
       },
+      gridTemplateRows: {
+        layout: '200px minmax(900px, 1fr) 100px',
+      },
     },
   },
   plugins: [require('daisyui')],

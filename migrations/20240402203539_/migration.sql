@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Meal" ALTER COLUMN "imgS3Path" DROP DEFAULT;

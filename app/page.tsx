@@ -36,8 +36,7 @@ async function saveNewMeal(meal: Meal): Promise<void> {
           data: {
               mainTitle: meal.mainTitle,
               secondaryTitle: meal.secondaryTitle,
-              // todo: add image path
-              imagePath: '/Mac-and-Cheese.webp',
+              imagePath: meal.imagePath,
               tags: meal.tags,
               ingredients: meal.ingredients,
               notes: meal.notes,
@@ -70,13 +69,15 @@ export default async function Home() {
   const meals = await fetchMeals();
 
   return (
-   <main className='flex flex-col justify-center'>
-    <div className='flex justify-center mb-8 mt-3'>
+   <main className='flex flex-col h-full'>
+    <div className='flex justify-center mt-6'>
       <Header saveNewMeal={saveNewMeal} />
     </div>
     <div className="flex justify-center">
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
-        {meals.map((meal: Meal) => <MealCard key={meal.id} meal={meal} saveNotes={saveNotes} deleteMeal={deleteMeal}/>)} 
+      <div className='flex flex-col items-center h-[80vh] md:h-4/5 md:grid md:grid-cols-2 
+        lg:grid-cols-[500px_minmax(500px,_1fr)_500px]'>
+        {meals.map((meal: Meal) => 
+            <MealCard key={meal.id} meal={meal} saveNotes={saveNotes} deleteMeal={deleteMeal}/>)}
       </div>
     </div>
    </main>

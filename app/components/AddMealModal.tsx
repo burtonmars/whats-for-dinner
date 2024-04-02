@@ -16,23 +16,37 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   const [tags, setMealTags] = useState<MultiValue<MealTag>>([]);
   const [saving, setSaving] = useState(false);
   const [newMealIngredients, setNewMealIngredients] = useState<string[]>([]);
+  const [imageFile, setImageFile] = useState<File | null>(null);
   const [notes, setNotes] = useState('');
-  const { register, handleSubmit } = useForm<Meal>();
-
-  const onSubmit: SubmitHandler<Meal> = async (newMeal: Meal) => {
-    setSaving(true);
-    newMeal.tags = tags.map((tag: any) => tag.value);
-    newMeal.ingredients = newMealIngredients;
-    newMeal.notes = notes;
-    newMeal.imagePath = '';
-    await saveNewMeal(newMeal);
-    setSaving(false);
-    closeAddMealModal();
-  };
+  const { register, handleSubmit, reset } = useForm<Meal>();
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setNotes(event.target.value);
-    };
+      setNotes(event.target.value);
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setImageFile(e.target.files[0]);
+    }
+  };
+
+  const uploadImageToCloudinary = async (image: string | Blob) => {
+    const formData = new FormData();
+    formData.append('file', image);
+    formData.append('upload_preset', 'ml_default');
+
+    const response = await fetch(`https://api.cloudinary.com/v1_1/dv54qhjnt/image/upload`, {
+        method: 'POST',
+        body: formData,
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        return data.secure_url;
+    }
+
+    throw new Error('Image upload failed');
+};
 
   const addIngredient = () => {
     const ingredientInput = document.getElementById('ingredient') as HTMLInputElement;
@@ -40,6 +54,37 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
       setNewMealIngredients([...newMealIngredients, ingredientInput.value]);
       ingredientInput.value = '';
     }
+  };
+
+  
+  const onSubmit: SubmitHandler<Meal> = async (newMeal: Meal) => {
+    setSaving(true);
+    if (imageFile) {
+        try {
+            const imageUrl = await uploadImageToCloudinary(imageFile);
+            console.log(imageUrl)
+            newMeal.imagePath = imageUrl;
+        } catch (error) {
+            console.error(error);
+            setSaving(false);
+            return;
+        }
+    }
+    newMeal.tags = tags.map((tag: any) => tag.value);
+    newMeal.ingredients = newMealIngredients;
+    newMeal.notes = notes;
+    await saveNewMeal(newMeal);
+    resetForm();
+    setSaving(false);
+    closeAddMealModal();
+  };
+
+  const resetForm = () => {
+    reset();
+    setMealTags([]);
+    setNewMealIngredients([]);
+    setImageFile(null);
+    setNotes('');
   };
 
   return (
@@ -60,7 +105,7 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
           <div className='flex flex-col mb-4'>
             <label className="input input-bordered flex items-center gap-2">
               description
-              <input type="text" className="grow" id="secondaryTitle" {...register("secondaryTitle", { required: true, maxLength: 30 })}/>
+              <input type="text" className="grow" id="secondaryTitle" {...register("secondaryTitle", { required: true, maxLength: 60 })}/>
             </label>
           </div>
           <div className='flex flex-col mb-4'>
@@ -83,17 +128,19 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
               isMulti
               options={mealTags}
               onChange={(tag) => setMealTags(tag as any)}
+              value={tags}
               id='tags'
             />
           </div>
           <div className='flex flex-col mb-4'>
-            {/* todo: add image upload functionality */}
             <label htmlFor="mealImage" className='mb-2'>image</label>
             <input 
-              id="mealImage"
-              type="file"
-              accept=".jpg, .png, .gif, .jpeg"
-              className="file-input file-input-bordered file-input-secondary file-input-sm w-full max-w-xs" />
+                id="mealImage"
+                type="file"
+                accept=".jpg, .png, .gif, .jpeg"
+                className="file-input file-input-bordered file-input-secondary file-input-sm w-full max-w-xs"
+                onChange={handleImageChange}
+              />
           </div>
           <div className='flex flex-col'>
             <label className="form-control">
