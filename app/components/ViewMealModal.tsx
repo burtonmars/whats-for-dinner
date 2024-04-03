@@ -29,7 +29,7 @@ const ViewMealModal = ({ meal, saveNotes, closeModal }: MealModalProps) => {
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={closeModal}>✕</button>
         </form>
         {/* todo: add image path */}
-        <figure><img className='rounded-t-xl max-h-72 w-full object-cover' src={'/Mac-and-Cheese.webp'} alt={meal.mainTitle} /></figure>
+        <figure><img className='rounded-t-xl max-h-72 w-full object-cover' src={meal.imagePath} alt={meal.mainTitle} /></figure>
         <h2 className='text-xl mt-3 font-bold'>{meal.mainTitle}</h2>
         <h3 className='text-base mb-3'>{meal.secondaryTitle}</h3>
         <div className='my-3'>
