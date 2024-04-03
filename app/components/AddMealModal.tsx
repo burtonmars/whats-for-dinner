@@ -20,6 +20,11 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   const [notes, setNotes] = useState('');
   const { register, handleSubmit, reset } = useForm<Meal>();
 
+  const numberOfColumns = Math.ceil(newMealIngredients.length / 8);
+  const columnWidth = 150;
+  const columnGap = 20;
+  const totalWidth = numberOfColumns * columnWidth + (numberOfColumns - 1) * columnGap;
+
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       setNotes(event.target.value);
   };
@@ -56,6 +61,9 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
     }
   };
 
+  const removeIngredient = (indexToRemove: number) => {
+    setNewMealIngredients(newMealIngredients.filter((_, index) => index !== indexToRemove));
+  };
   
   const onSubmit: SubmitHandler<Meal> = async (newMeal: Meal) => {
     setSaving(true);
@@ -114,10 +122,13 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
               <input type="text" className="grow" id="ingredient"/>
               <button type='button' className='btn btn-accent btn-sm' onClick={addIngredient}>add</button>
             </label>
-            <div>
-              <ul>
-                {newMealIngredients.map((ingredient, index) => 
-                  <li key={index}>{ingredient}</li>)}
+            <div className='flex justify-start ml-4 mt-4'>
+             <ul style={{ columnCount: numberOfColumns, columnGap: `${columnGap}px`, width: `${totalWidth}px` }}>
+                {newMealIngredients.map((ingredient, index) =>
+                <div className='w-full flex justify-between p-1' key={index}>
+                  <li>{ingredient}</li>
+                  <button className='btn btn-xs btn-accent opacity-60' onClick={() => removeIngredient(index)}>X</button>
+                </div>)}
               </ul>
             </div>
           </div>
