@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { Image } from 'cloudinary-react';
 
 import ViewMealModal from './ViewMealModal';
-import { Meal } from '../lib/definitions';
+import { Meal } from '../_lib/definitions';
 
 interface MealCardProps {
     meal: Meal;

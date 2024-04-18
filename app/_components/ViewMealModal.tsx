@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Meal } from '../lib/definitions';
+import { Meal } from '../_lib/definitions';
 
 interface MealModalProps {
     meal: Meal;

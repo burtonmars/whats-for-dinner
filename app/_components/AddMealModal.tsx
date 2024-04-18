@@ -3,7 +3,7 @@ import Select, { MultiValue } from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { useForm, SubmitHandler, Controller } from "react-hook-form"
 
-import { Meal, MealTag, mealTags } from '../lib/definitions';
+import { Meal, MealTag, mealTags } from '../_lib/definitions';
 
 interface AddMealModalProps { 
   saveNewMeal: (newMeal: any) => void;

@@ -2,12 +2,13 @@
 
 import { PrismaClient } from '@prisma/client';
 
-import Header from './components/Header';
-import MealCard from './components/MealCard';
-import { Meal } from './lib/definitions';
-import { fetchMeals } from './lib/data';
+import Header from './_components/Header';
+import MealCard from './_components/MealCard';
+import { Meal } from './_lib/definitions';
+import { fetchMeals } from './_lib/data';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
 
 const prisma = new PrismaClient();
 
@@ -74,12 +75,28 @@ export default async function Home() {
       <Header saveNewMeal={saveNewMeal} />
     </div>
     <div className="flex justify-center">
-      <div className='flex flex-col items-center h-[80vh] md:h-4/5 md:grid md:grid-cols-2 
-        lg:grid-cols-[500px_minmax(500px,_1fr)_500px]'>
-        {meals.map((meal: Meal) => 
-            <MealCard key={meal.id} meal={meal} saveNotes={saveNotes} deleteMeal={deleteMeal}/>)}
-      </div>
+        <div className='flex flex-col items-center h-[80vh] md:h-4/5 md:grid md:grid-cols-2 
+            lg:grid-cols-[500px_minmax(500px,_1fr)_500px]'>
+            {meals.map((meal: Meal) => 
+                <MealCard key={meal.id} meal={meal} saveNotes={saveNotes} deleteMeal={deleteMeal}/>)}
+        </div>
     </div>
+    {/* ***allow users who arent signed in see app until user management implemented*** */}
+    {/* <SignedOut >
+        <div className='flex flex-col w-full h-full mt-48 justify-center items-center'>
+            <div className='text-2xl'>Welcome to what's for dinner!</div>
+            <div className='text-2xl'>Please sign in</div>
+        </div>
+    </SignedOut>
+    <SignedIn>
+        <div className="flex justify-center">
+            <div className='flex flex-col items-center h-[80vh] md:h-4/5 md:grid md:grid-cols-2 
+                lg:grid-cols-[500px_minmax(500px,_1fr)_500px]'>
+                {meals.map((meal: Meal) => 
+                    <MealCard key={meal.id} meal={meal} saveNotes={saveNotes} deleteMeal={deleteMeal}/>)}
+            </div>
+        </div>
+    </SignedIn> */}
    </main>
   )
 }
