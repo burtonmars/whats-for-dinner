@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Select, { MultiValue } from 'react-select';
 import makeAnimated from 'react-select/animated';
-import { useForm, SubmitHandler, Controller } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form"
 
 import { Meal, MealTag, mealTags } from '../_lib/definitions';
 
@@ -18,7 +18,7 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   const [newMealIngredients, setNewMealIngredients] = useState<string[]>([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [notes, setNotes] = useState('');
-  const { register, handleSubmit, reset } = useForm<Meal>();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<Meal>();
 
   const numberOfColumns = Math.ceil(newMealIngredients.length / 8);
   const columnWidth = 150;
@@ -70,7 +70,6 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
     if (imageFile) {
         try {
             const imageUrl = await uploadImageToCloudinary(imageFile);
-            console.log(imageUrl)
             newMeal.imagePath = imageUrl;
         } catch (error) {
             console.error(error);
@@ -108,12 +107,16 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
             <label className="input input-bordered flex items-center gap-2">
               meal name
               <input type="text" className="grow" id="mainTitle" {...register("mainTitle", { required: true, maxLength: 30 })}/>
+              {errors.mainTitle && errors.mainTitle.type === "required" && <span className='text-error-red'>This is required</span>}
+              {errors.mainTitle && errors.mainTitle.type === "maxLength" && <span className='text-error-red'>Max length exceeded</span> }
             </label>
           </div>
           <div className='flex flex-col mb-4'>
             <label className="input input-bordered flex items-center gap-2">
               description
               <input type="text" className="grow" id="secondaryTitle" {...register("secondaryTitle", { required: true, maxLength: 60 })}/>
+                {errors.secondaryTitle && errors.secondaryTitle.type === "required" && <span className='text-error-red'>This is required</span>}
+                {errors.secondaryTitle && errors.secondaryTitle.type === "maxLength" && <span className='text-error-red'>Max length exceeded</span> }
             </label>
           </div>
           <div className='flex flex-col mb-4'>
