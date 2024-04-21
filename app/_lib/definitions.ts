@@ -1,5 +1,6 @@
 export type Meal = {
   id: number
+  userId: string
   mainTitle: string
   secondaryTitle: string
   imagePath: string
