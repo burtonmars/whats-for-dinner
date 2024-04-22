@@ -27,5 +27,4 @@ html {
 body {
   height: 100%;
   color: rgb(var(--foreground-rgb));
-  background-color: var(--theme-color-background);
 }
