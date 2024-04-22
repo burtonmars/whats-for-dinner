@@ -1,12 +1,13 @@
 'use server';
 
-import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
+import { SignedIn, SignedOut } from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server'
 
 import Header from './_components/Header';
 import HomeScreen from './_components/HomeScreen';
 import { fetchMeals } from './_lib/data';
 import { Meal } from './_lib/definitions';
+import LandingPage from './_components/LandingPage';
 
 export default async function Home() {
   const { userId } = auth();
@@ -23,14 +24,9 @@ export default async function Home() {
       <Header userId={userId} />
     </div>
     <SignedOut >
-        <div className='flex flex-col w-full h-4/5 justify-center items-center gap-4'>
-            <div className='text-2xl'><span className='text-red-500 font-bold'>welcome</span> to what's for dinner!</div>
-            <div className='text-2xl'>ready to add dinner ideas to your collection?</div>
-            <div className='text-2xl'><span>
-              <SignInButton>
-                <button className='text-green-500 font-bold'>sign in</button>
-              </SignInButton></span> to start</div>
-        </div>
+      <div className='flex justify-center items-center w-full h-full'>
+        <LandingPage />
+      </div>
     </SignedOut>
     <SignedIn>
         <div className='flex justify-center items-center'>

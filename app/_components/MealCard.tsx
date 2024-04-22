@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Image } from 'cloudinary-react';
 
 import ViewMealModal from './ViewMealModal';
@@ -54,7 +54,7 @@ const MealCard = ({meal, saveNotes, deleteMeal}: MealCardProps) => {
                     )}
                 </ul>
             </div>
-            <div className="card-actions mt-2">
+            <div className="card-actions mt-2 p-4">
                 <div className='flex w-full justify-between'>
                     <form action={navigateHome}>
                         <button onClick={handleDelete} className='btn btn-outline btn-error w-24' disabled={saving}>{saving ? 'deleting...' : 'delete'}</button>
