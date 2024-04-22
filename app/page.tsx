@@ -1,6 +1,6 @@
 'use server';
 
-import { SignedIn, SignedOut } from '@clerk/nextjs';
+import { SignInButton, SignedIn, SignedOut } from '@clerk/nextjs';
 import { auth } from '@clerk/nextjs/server'
 
 import Header from './_components/Header';
@@ -23,10 +23,13 @@ export default async function Home() {
       <Header userId={userId} />
     </div>
     <SignedOut >
-        <div className='flex flex-col w-full h-full justify-center items-center gap-4'>
-            <div className='text-2xl'>Welcome to what's for dinner!</div>
+        <div className='flex flex-col w-full h-4/5 justify-center items-center gap-4'>
+            <div className='text-2xl'><span className='text-red-500 font-bold'>welcome</span> to what's for dinner!</div>
             <div className='text-2xl'>ready to add dinner ideas to your collection?</div>
-            <div className='text-2xl'>Sign in to start</div>
+            <div className='text-2xl'><span>
+              <SignInButton>
+                <button className='text-green-500 font-bold'>sign in</button>
+              </SignInButton></span> to start</div>
         </div>
     </SignedOut>
     <SignedIn>
