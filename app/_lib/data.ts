@@ -3,8 +3,6 @@
 import { auth } from '@clerk/nextjs/server'
 import { PrismaClient } from '@prisma/client'
 import { Meal } from './definitions'
-import { redirect } from 'next/navigation'
-import { revalidatePath } from 'next/cache'
 
 const prisma = new PrismaClient()
 
