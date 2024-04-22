@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState } from 'react';
 import { Image } from 'cloudinary-react';
-import { useRouter } from 'next/navigation';
 
 import ViewMealModal from './ViewMealModal';
 import { Meal } from '../_lib/definitions';
@@ -17,7 +16,6 @@ interface MealCardProps {
 const MealCard = ({meal, saveNotes, deleteMeal}: MealCardProps) => {
     const [showModal, setShowModal] = useState(false);
     const [saving, setSaving] = useState(false);
-    const router = useRouter();
 
     const openModal = () => {
         setShowModal(true);
@@ -26,10 +24,6 @@ const MealCard = ({meal, saveNotes, deleteMeal}: MealCardProps) => {
     const closeModal = () => {
         setShowModal(false);
     };
-
-    useEffect(() => {
-        router.push('/');
-    }, [saving]);
         
     const handleDelete = async () => {
         setSaving(true);
@@ -39,6 +33,7 @@ const MealCard = ({meal, saveNotes, deleteMeal}: MealCardProps) => {
             console.error('Error deleting meal:', error);
         } finally {
             setSaving(false);
+            navigateHome();
         }
     };
     
