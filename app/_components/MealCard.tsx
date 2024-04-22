@@ -1,10 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image } from 'cloudinary-react';
+import { useRouter } from 'next/navigation';
 
 import ViewMealModal from './ViewMealModal';
 import { Meal } from '../_lib/definitions';
+import { navigateHome } from '../_lib/actions';
 
 interface MealCardProps {
     meal: Meal;
@@ -15,6 +17,7 @@ interface MealCardProps {
 const MealCard = ({meal, saveNotes, deleteMeal}: MealCardProps) => {
     const [showModal, setShowModal] = useState(false);
     const [saving, setSaving] = useState(false);
+    const router = useRouter();
 
     const openModal = () => {
         setShowModal(true);
@@ -23,12 +26,20 @@ const MealCard = ({meal, saveNotes, deleteMeal}: MealCardProps) => {
     const closeModal = () => {
         setShowModal(false);
     };
+
+    useEffect(() => {
+        router.push('/');
+    }, [saving]);
         
     const handleDelete = async () => {
         setSaving(true);
-        await deleteMeal(meal.id);
-        setSaving(false);
-        closeModal();
+        try {
+            await deleteMeal(meal.id);
+        } catch (error) {
+            console.error('Error deleting meal:', error);
+        } finally {
+            setSaving(false);
+        }
     };
     
   return (
@@ -50,7 +61,9 @@ const MealCard = ({meal, saveNotes, deleteMeal}: MealCardProps) => {
             </div>
             <div className="card-actions">
                 <div className='flex w-full justify-between'>
-                    <button onClick={handleDelete} className='btn btn-outline btn-error w-24' disabled={saving}>delete</button>
+                    <form action={navigateHome}>
+                        <button onClick={handleDelete} className='btn btn-outline btn-error w-24' disabled={saving}>delete</button>
+                    </form>
                     <button className="btn btn-secondary w-30" onClick={openModal}>view meal</button>
                     <dialog id="view_meal_modal" className="modal" open={showModal}>
                         <ViewMealModal meal={meal} saveNotes={saveNotes} closeModal={closeModal} />

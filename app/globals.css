@@ -6,8 +6,8 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
-
   --font-family: "Roboto Mono", sans-serif;
+  --theme-color-background: rgba(255, 80, 80, 0.075);
 }
 
 * {
@@ -20,7 +20,12 @@
   }
 }
 
+html {
+  height: 100%;
+}
+
 body {
+  height: 100%;
   color: rgb(var(--foreground-rgb));
-  padding: 1rem;
+  background-color: var(--theme-color-background);
 }

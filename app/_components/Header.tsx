@@ -4,11 +4,10 @@ import React, { useState } from 'react';
 import AddMealModal from './AddMealModal';
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
-interface HeaderProps {
-    saveNewMeal: any;
-}
+import { saveNewMeal } from '../_lib/data';
 
-const Header = ({saveNewMeal}: HeaderProps) => {
+
+const Header = () => {
   const [showModal, setShowModal] = useState(false);
 
   const openAddMealModal = () => {

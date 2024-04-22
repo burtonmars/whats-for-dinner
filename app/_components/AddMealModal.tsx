@@ -4,6 +4,7 @@ import makeAnimated from 'react-select/animated';
 import { useForm, SubmitHandler } from "react-hook-form"
 
 import { Meal, MealTag, mealTags } from '../_lib/definitions';
+import { navigateHome } from '../_lib/actions';
 
 interface AddMealModalProps { 
   saveNewMeal: (newMeal: any) => void;
@@ -51,7 +52,7 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
     }
 
     throw new Error('Image upload failed');
-};
+  };
 
   const addIngredient = () => {
     const ingredientInput = document.getElementById('ingredient') as HTMLInputElement;
@@ -66,24 +67,24 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   };
   
   const onSubmit: SubmitHandler<Meal> = async (newMeal: Meal) => {
-    setSaving(true);
-    if (imageFile) {
-        try {
-            const imageUrl = await uploadImageToCloudinary(imageFile);
-            newMeal.imagePath = imageUrl;
-        } catch (error) {
-            console.error(error);
-            setSaving(false);
-            return;
-        }
-    }
-    newMeal.tags = tags.map((tag: any) => tag.value);
-    newMeal.ingredients = newMealIngredients;
-    newMeal.notes = notes;
-    await saveNewMeal(newMeal);
-    resetForm();
-    setSaving(false);
-    closeAddMealModal();
+      setSaving(true);
+      try {
+          if (imageFile) {
+              const imageUrl = await uploadImageToCloudinary(imageFile);
+              newMeal.imagePath = imageUrl;
+          }
+          newMeal.tags = tags.map((tag: any) => tag.value);
+          newMeal.ingredients = newMealIngredients;
+          newMeal.notes = notes;
+          await saveNewMeal(newMeal);
+          resetForm();
+          closeAddMealModal();
+      } catch (error) {
+          console.error("An error occurred:", error);
+      } finally {
+          setSaving(false);
+          navigateHome();
+      }
   };
 
   const resetForm = () => {
