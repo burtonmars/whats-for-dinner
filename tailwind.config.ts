@@ -14,8 +14,10 @@ const config: Config = {
       boxShadow: {
         '2xlDark': '0 35px 60px -15px rgba(0, 0, 0, 0.6)',
       },
-      gridTemplateRows: {
-        layout: '200px minmax(900px, 1fr) 100px',
+      gridTemplateColumns: {
+        mealCards: 'repeat(1, minmax(250px, 1fr))',
+        mealCardsMd: 'repeat(2, minmax(250px, 1fr))',
+        mealCardsXl: 'repeat(3, minmax(250px, 1fr))',
       },
     },
   },

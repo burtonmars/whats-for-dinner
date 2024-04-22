@@ -21,9 +21,10 @@ export default async function Home() {
       <Header />
     </div>
     <SignedOut >
-        <div className='flex flex-col w-full h-full mt-48 justify-center items-center'>
+        <div className='flex flex-col w-full h-full mt-[-72px] justify-center items-center gap-4'>
             <div className='text-2xl'>Welcome to what's for dinner!</div>
-            <div className='text-2xl'>Please sign in</div>
+            <div className='text-2xl'>ready to add dinner ideas to your collection?</div>
+            <div className='text-2xl'>Sign in to start</div>
         </div>
     </SignedOut>
     <SignedIn>
