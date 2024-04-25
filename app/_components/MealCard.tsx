@@ -9,11 +9,10 @@ import { navigateHome } from '../_lib/actions';
 
 interface MealCardProps {
     meal: Meal;
-    saveNotes: any;
     deleteMeal: any;
 }
 
-const MealCard = ({meal, saveNotes, deleteMeal}: MealCardProps) => {
+const MealCard = ({meal, deleteMeal}: MealCardProps) => {
     const [showModal, setShowModal] = useState(false);
     const [saving, setSaving] = useState(false);
 
@@ -61,7 +60,7 @@ const MealCard = ({meal, saveNotes, deleteMeal}: MealCardProps) => {
                     </form>
                     <button className="btn btn-secondary w-30" onClick={openModal}>view meal</button>
                     <dialog id="view_meal_modal" className="modal" open={showModal}>
-                        <ViewMealModal meal={meal} saveNotes={saveNotes} closeModal={closeModal} />
+                        <ViewMealModal meal={meal} closeModal={closeModal} />
                     </dialog>
                 </div>
             </div>

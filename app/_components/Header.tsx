@@ -5,20 +5,23 @@ import AddMealModal from './AddMealModal';
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
 
 import { saveNewMeal } from '../_lib/data';
+import { Meal } from '../_lib/definitions';
+import SearchBar from './SearchBar';
 
 interface HeaderProps {
     userId: string | null;
+    meals: Meal[];
 }
 
-const Header = ({ userId }: HeaderProps) => {
-  const [showModal, setShowModal] = useState(false);
+const Header = ({ userId, meals }: HeaderProps) => {
+  const [showAddModal, setShowAddModal] = useState(false);
 
   const openAddMealModal = () => {
-      setShowModal(true);
+      setShowAddModal(true);
   };
 
   const closeAddMealModal = () => {
-      setShowModal(false);
+      setShowAddModal(false);
   };
 
   return (
@@ -28,7 +31,7 @@ const Header = ({ userId }: HeaderProps) => {
               <button className="btn btn-primary" disabled={!userId} onClick={openAddMealModal}>
                   new meal
               </button>
-              <dialog id="view_meal_modal" className="modal" open={showModal}>
+              <dialog id="add_meal_modal" className="modal" open={showAddModal}>
                   <AddMealModal saveNewMeal={saveNewMeal} closeAddMealModal={closeAddMealModal} />
               </dialog>
             </div>
@@ -36,12 +39,10 @@ const Header = ({ userId }: HeaderProps) => {
         <div className="grow flex justify-center items-center">
             <a className="btn btn-ghost text-xl">what's for dinner?</a>
         </div>
-        <div className="flex-1">
-            <div className="form-control">
-                <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
-            </div>
+        <div className='mx-8'>
+            <SearchBar meals={meals} userId={userId}/>
         </div>
-        <div className="">
+        <div>
             <SignedOut>
                 <SignInButton />
             </SignedOut>

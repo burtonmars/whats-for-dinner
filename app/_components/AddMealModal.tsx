@@ -36,7 +36,7 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
     }
   };
 
-  const uploadImageToCloudinary = async (image: string | Blob) => {
+  const uploadImageToCloudinary = async (image: Blob) => {
     const formData = new FormData();
     formData.append('file', image);
     formData.append('upload_preset', 'ml_default');
@@ -96,7 +96,7 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   };
 
   return (
-    <div className="modal-box shadow-2xlDark max-w-none w-9/12 md:w-7/12 xl:w-4/12 max-h-none h-5/6 lg:h-4/5">
+    <div className="modal-box shadow-2xlDark max-w-none w-4/5 md:w-2/3 xl:w-4/12 h-full max-h-none lg:h-4/5">
         <form className='mb-4' method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={closeAddMealModal}>✕</button>
         </form>

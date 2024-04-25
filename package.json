@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^5.0.0-beta.46",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/material": "^5.15.15",
     "@prisma/client": "^5.12.1",
     "@vercel/analytics": "^1.2.2",
     "@vercel/postgres": "^0.7.2",

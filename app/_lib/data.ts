@@ -13,6 +13,7 @@ export async function fetchMeals() {
       where: {
         userId: userId,
       },
+      orderBy: { id: 'desc' },
     })
     return meals
   } else {
@@ -21,18 +22,28 @@ export async function fetchMeals() {
   }
 }
 
-export async function saveNotes(id: number, notes: string): Promise<void> {
-  try {
-    await prisma.meal.update({
-      where: {
-        id: id,
-      },
-      data: {
-        notes: notes,
-      },
-    })
-  } catch (error) {
-    console.error('Error saving notes:', error)
+export async function updateMeal(meal: Meal): Promise<void> {
+  const { userId } = auth()
+  if (userId) {
+    try {
+      await prisma.meal.update({
+        where: {
+          id: meal.id,
+        },
+        data: {
+          mainTitle: meal.mainTitle,
+          secondaryTitle: meal.secondaryTitle,
+          imagePath: meal.imagePath,
+          tags: meal.tags,
+          ingredients: meal.ingredients,
+          notes: meal.notes,
+        },
+      })
+    } catch (error) {
+      console.error('Error updating meal:', error)
+    }
+  } else {
+    console.error('Error updating meal: User not signed in')
   }
 }
 
