@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Image } from 'cloudinary-react';
+import { v4 as uuidv4 } from 'uuid';
 
 import { Meal } from '../_lib/definitions';
 import { updateMeal } from '../_lib/data';
@@ -37,7 +38,7 @@ const ViewMealModal = ({ meal, closeModal }: MealModalProps) => {
     };
 
   return (
-    <div className="modal-box max-w-none w-4/5 md:w-2/3 xl:w-4/12 h-full">
+    <div className="modal-box max-w-none w-4/5 md:w-1/2 xl:w-4/12 h-[90%]">
         <form className='mb-4' method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={closeModal}>✕</button>
         </form>
@@ -45,32 +46,36 @@ const ViewMealModal = ({ meal, closeModal }: MealModalProps) => {
             <Image className="w-full h-full object-cover" cloudName="dv54qhjnt" publicId={meal.imagePath}/>
         </figure>
         <form onSubmit={handleSubmit}>
-            <h2 className='text-xl mt-3 font-bold'>{meal.mainTitle}</h2>
-            <h3 className='text-base mb-3'>{meal.secondaryTitle}</h3>
-            <div className='my-3'>
-                <ul>
-                    {meal.tags.map((tag) => 
-                        <li key={tag} className='badge mx-1 h-6 bg-accent border-none font-semibold'>{tag}</li>
-                    )}
-                </ul>
-            </div>
-            <div className='my-3'>
-                <h3 className='font-semibold'>Ingredients</h3>
-                <ul className='text-sm list-disc mx-4'>
-                    {meal.ingredients.map((ingredient) => 
-                        <li key={ingredient} className='mx-1'>{ingredient}</li>
-                    )}
-                </ul>
-            </div>
-            <div className='flex flex-col'>
-                <label className="form-control">
-                    <div className="label">
-                        <span className="label-text">notes</span>
+            <div className='flex flex-col gap-2'>
+                <h2 className='text-xl font-bold mt-4'>{meal.mainTitle}</h2>
+                <h3 className='text-lg'>{meal.secondaryTitle}</h3>
+                <div className='my-1 lg:my-2'>
+                    <ul className='flex flex-wrap gap-2 lg:gap-0'>
+                        {meal.tags.map((tag) => 
+                            <li key={uuidv4()} className='badge mx-0 lg:mx-1 h-6 bg-accent border-none font-semibold'>{tag}</li>
+                        )}
+                    </ul>
+                </div>
+                <div className='max-w-[450px]'>
+                    <h3 className='font-semibold text-md lg:text-lg'>Ingredients</h3>
+                    <ul className='flex flex-col flex-wrap text-sm list-none mx-2 lg:mx-4 my-2 max-h-32'>
+                        {meal.ingredients.map((ingredient) => 
+                            <li key={uuidv4()} className='text-md lg:text-[1rem] my-0 lg:my-1' style={{ pageBreakInside: 'avoid', breakInside: 'avoid-column' }}>
+                                {ingredient}
+                            </li>
+                        )}
+                    </ul>
+                </div>
+                <div className='flex flex-col'>
+                    <label className="form-control">
+                        <div className="label">
+                            <span className="label-text">notes</span>
+                        </div>
+                        <textarea className="textarea textarea-bordered h-24" id='meal_modal_notes' value={notes} onChange={handleChange}></textarea>
+                    </label>
+                    <div className='flex justify-end mt-6'>
+                        <button type='submit' className='btn btn-primary w-24' disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
                     </div>
-                    <textarea className="textarea textarea-bordered h-24" id='meal_modal_notes' value={notes} onChange={handleChange}></textarea>
-                </label>
-                <div className='flex justify-end mt-6'>
-                    <button type='submit' className='btn btn-primary w-24' disabled={saving}>{saving ? 'Saving...' : 'Save'}</button>
                 </div>
             </div>
         </form>

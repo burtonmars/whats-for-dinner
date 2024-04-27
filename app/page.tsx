@@ -8,6 +8,7 @@ import HomeScreen from './_components/HomeScreen';
 import { fetchMeals } from './_lib/data';
 import { Meal } from './_lib/definitions';
 import LandingPage from './_components/LandingPage';
+import Footer from './_components/Footer';
 
 export default async function Home() {
   const { userId } = auth();
@@ -28,6 +29,9 @@ export default async function Home() {
             <HomeScreen meals={meals} />
         </div>
     </SignedIn>
+    <div className='h-full w-full mt-10'>
+      <Footer></Footer>
+    </div>
    </main>
   )
 }

@@ -41,13 +41,13 @@ const MealCard = ({meal, deleteMeal}: MealCardProps) => {
         <figure className="w-full h-1/2">
             <Image className="w-full h-full object-cover" cloudName="dv54qhjnt" publicId={meal.imagePath}/>
         </figure>
-        <div className="card-body flex flex-col justify-between" style={{ height: '40%' }}>
+        <div className="card-body flex flex-col justify-between h-2/5">
             <div className="truncate">
                 <h2 className="card-title truncate">{meal.mainTitle}</h2>
                 <h3>{meal.secondaryTitle}</h3>
             </div>
-            <div style={{ height: '25%', overflow: 'auto' }}>
-                <ul className='flex flex-wrap'>
+            <div className='h-1/4 overflow-auto'>
+                <ul className='flex flex-wrap gap-2'>
                     {meal.tags.map((tag) => 
                         <li key={tag} className='badge mx-1 h-6 bg-accent border-none'>{tag}</li>
                     )}

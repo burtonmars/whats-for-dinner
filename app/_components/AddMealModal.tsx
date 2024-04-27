@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import Select, { MultiValue } from 'react-select';
 import makeAnimated from 'react-select/animated';
-import { useForm, SubmitHandler } from "react-hook-form"
+import { useForm, SubmitHandler } from "react-hook-form";
+import { v4 as uuidv4 } from 'uuid';
 
 import { Meal, MealTag, mealTags } from '../_lib/definitions';
 import { navigateHome } from '../_lib/actions';
@@ -129,7 +130,7 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
             <div className='flex justify-start ml-4 mt-4'>
              <ul style={{ columnCount: numberOfColumns, columnGap: `${columnGap}px`, width: `${totalWidth}px` }}>
                 {newMealIngredients.map((ingredient, index) =>
-                <div className='w-full flex justify-between p-1' key={index}>
+                <div className='w-full flex justify-between p-1' key={uuidv4()}>
                   <li>{ingredient}</li>
                   <button className='btn btn-xs btn-accent opacity-60' onClick={() => removeIngredient(index)}>X</button>
                 </div>)}
