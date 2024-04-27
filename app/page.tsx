@@ -16,7 +16,7 @@ export default async function Home() {
 
   return (
    <main className='flex flex-col h-full'>
-    <div className='flex justify-center mt-6'>
+    <div className='flex justify-center mt-6 w-full'>
       <Header userId={userId} meals={meals}/>
     </div>
     <SignedOut >
@@ -24,8 +24,8 @@ export default async function Home() {
         <LandingPage />
       </div>
     </SignedOut>
-    <SignedIn>
-        <div className='flex justify-center items-center'>
+    <SignedIn >
+        <div className='flex mt-6 w-full'>
             <HomeScreen meals={meals} />
         </div>
     </SignedIn>
