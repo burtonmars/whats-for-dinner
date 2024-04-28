@@ -31,7 +31,7 @@ const Header = ({ userId, meals }: HeaderProps) => {
                 <br />
             </div>
             <div className="w-full flex md:hidden justify-center items-center">
-                <a className="btn btn-ghost text-xl">meal spark</a>
+                <a className="btn btn-ghost text-2xl">meal spark</a>
             </div>
             <div className='w-full flex md:hidden justify-end'>
                 <SignedOut>

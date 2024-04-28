@@ -4,6 +4,8 @@ import { Analytics } from "@vercel/analytics/react"
 import { ClerkProvider } from '@clerk/nextjs'
 import './globals.css'
 
+import Providers from './providers'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -17,13 +19,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <ClerkProvider>
-      <html lang="en" data-theme='cmyk'>
-        <body className={`${inter.className} antialiased`}>
-          {children}
-          <Analytics />
-        </body>
-      </html>
-    </ClerkProvider>
+    <Providers>
+      <ClerkProvider>
+          <html lang="en" data-theme='cmyk'>
+            <body className={`${inter.className} antialiased`}>
+              {children}
+              <Analytics />
+            </body>
+          </html>
+      </ClerkProvider>
+    </Providers>
   )
 }

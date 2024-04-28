@@ -23,19 +23,19 @@ const ViewMealModal = ({ meal, closeModal }: MealModalProps) => {
         setNotes(meal.notes);
     }, [meal])
 
-    const handleSubmit = async () => {
-        setSaving(true);
-        try {
-            meal.notes = notes;
-            await updateMeal(meal);
-            closeModal();
-        }catch (error) {
-          console.error("An error occurred:", error);
-      } finally {
-          setSaving(false);
-          await navigateHome();
-      }
-    };
+const handleSubmit = async () => {
+    setSaving(true);
+    try {
+        meal.notes = notes;
+        await updateMeal(meal);
+        closeModal();
+    }catch (error) {
+        console.error("An error occurred:", error);
+    } finally {
+        setSaving(false);
+        await navigateHome();
+    }
+};
 
   return (
     <div className="modal-box max-w-none w-4/5 md:w-1/2 xl:w-4/12 h-[90%]">
