@@ -25,7 +25,7 @@ export default async function Home() {
           </div>
         </SignedOut>
         <SignedIn >
-            <div className='flex mt-6 w-full'>
+            <div className='flex w-full'>
                 <HomeScreen meals={meals} />
             </div>
         </SignedIn>

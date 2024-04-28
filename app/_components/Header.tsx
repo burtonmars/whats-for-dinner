@@ -52,7 +52,7 @@ const Header = ({ userId, meals }: HeaderProps) => {
                 </dialog>
             </div>
             <div className="hidden w-full md:flex justify-center">
-                <h1 className="btn btn-ghost text-[2.6rem]">meal spark</h1>
+                <h1 className="btn btn-ghost text-[2.2rem]">meal spark</h1>
             </div>
             <div className='flex h-full w-full justify-end items-center'>
                 <div className='md:mx-8'>
