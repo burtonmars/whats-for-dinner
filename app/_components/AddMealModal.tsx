@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select, { MultiValue } from 'react-select';
 import makeAnimated from 'react-select/animated';
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -20,8 +20,16 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   const [newMealIngredients, setNewMealIngredients] = useState<string[]>([]);
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [notes, setNotes] = useState('');
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<Meal>();
+  const { 
+    register,
+    handleSubmit,
+    reset,
+    setError,
+    clearErrors,
+    formState: { errors }
+  } = useForm<Meal>();
 
+  const maxIngredients = 15;
   const numberOfColumns = Math.ceil(newMealIngredients.length / 8);
   const columnWidth = 150;
   const columnGap = 20;
@@ -30,6 +38,23 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       setNotes(event.target.value);
   };
+
+  const handleKeyPress = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      const inputElement = event.currentTarget as HTMLInputElement;
+      if (inputElement.value.trim() !== '') {
+        addIngredient();
+      }
+    }
+  };
+
+useEffect(() => {
+  if (newMealIngredients.length <= maxIngredients) {
+    clearErrors('ingredients');
+  }
+}, [newMealIngredients, maxIngredients, setError, clearErrors]);
+
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -58,16 +83,24 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
   const addIngredient = () => {
     const ingredientInput = document.getElementById('ingredient') as HTMLInputElement;
     if (ingredientInput && ingredientInput.value.trim() !== '') {
-      setNewMealIngredients([...newMealIngredients, ingredientInput.value]);
-      ingredientInput.value = '';
+      if (newMealIngredients.length < maxIngredients) {
+        setNewMealIngredients([...newMealIngredients, ingredientInput.value]);
+        ingredientInput.value = '';
+      } else if (newMealIngredients.length === maxIngredients) {
+        setNewMealIngredients([...newMealIngredients, ingredientInput.value]);
+        ingredientInput.value = '';
+        setError('ingredients', { type: 'max', message: `Maximum ${maxIngredients} ingredients allowed.` });
+      }
     }
   };
 
   const removeIngredient = (indexToRemove: number) => {
+    console.log(errors)
     setNewMealIngredients(newMealIngredients.filter((_, index) => index !== indexToRemove));
   };
   
   const onSubmit: SubmitHandler<Meal> = async (newMeal: Meal) => {
+    console.log('submitting')
       setSaving(true);
       try {
           if (imageFile) {
@@ -124,9 +157,10 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
           <div className='flex flex-col mb-4'>
             <label className="input input-bordered flex items-center gap-2">
               ingredients
-              <input type="text" className="grow" id="ingredient"/>
+              <input type="text" className="grow" id="ingredient" onKeyDown={handleKeyPress}/>
               <button type='button' className='btn btn-accent btn-sm' onClick={addIngredient}>add</button>
             </label>
+            {errors.ingredients && errors.ingredients.type === "max" && <span className='text-error-red p-2'>Maximum ingredients exceeded</span>}
             <div className='flex justify-start ml-4 mt-4'>
              <ul style={{ columnCount: numberOfColumns, columnGap: `${columnGap}px`, width: `${totalWidth}px` }}>
                 {newMealIngredients.map((ingredient, index) =>
