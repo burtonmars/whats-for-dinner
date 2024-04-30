@@ -29,7 +29,7 @@ const AddMealModal = ({saveNewMeal, closeAddMealModal}: AddMealModalProps) => {
     formState: { errors }
   } = useForm<Meal>();
 
-  const maxIngredients = 15;
+  const maxIngredients = 18;
   const numberOfColumns = Math.ceil(newMealIngredients.length / 8);
   const columnWidth = 150;
   const columnGap = 20;
