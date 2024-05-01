@@ -15,6 +15,7 @@ interface MealCardProps {
 const MealCard = ({meal, deleteMeal}: MealCardProps) => {
     const [showModal, setShowModal] = useState(false);
     const [saving, setSaving] = useState(false);
+    const demoMealIds = [74, 75, 77];
 
     const openModal = () => {
         setShowModal(true);
@@ -25,6 +26,10 @@ const MealCard = ({meal, deleteMeal}: MealCardProps) => {
     };
         
     const handleDelete = async () => {
+        if (demoMealIds.includes(meal.id)) {
+            alert('You cannot delete this meal because it is a demo meal. Please create your own meal to delete.');
+            return;
+        }
         setSaving(true);
         try {
             await deleteMeal(meal.id);

@@ -15,14 +15,7 @@ interface HeaderProps {
 
 const Header = ({ userId, meals }: HeaderProps) => {
   const [showAddModal, setShowAddModal] = useState(false);
-
-  const openAddMealModal = () => {
-      setShowAddModal(true);
-  };
-
-  const closeAddMealModal = () => {
-      setShowAddModal(false);
-  };
+  const maxDemoMealCount = 4;
 
   return (
     <nav className="navbar flex-col md:flex-row w-full justify-around lg:px-16 xl:w-3/4">
@@ -44,11 +37,12 @@ const Header = ({ userId, meals }: HeaderProps) => {
         </div>
         <div className='flex w-full justify-between my-4 px-4'>
             <div className='flex h-full w-5/6 md:w-full items-center'>
-                <button className="btn btn-primary text-xl" disabled={!userId} onClick={openAddMealModal}>
+                <button className="btn btn-primary text-xl" disabled={!userId || meals.length >= maxDemoMealCount} onClick={() => setShowAddModal(true)}>
                     new meal
                 </button>
+                {meals.length >= maxDemoMealCount && <span className='text-red-500 text-sm ml-2'>You have reached the maximum number of meals for the demo account.</span>}
                 <dialog id="add_meal_modal" className="modal" open={showAddModal}>
-                    <AddMealModal saveNewMeal={saveNewMeal} closeAddMealModal={closeAddMealModal} />
+                    <AddMealModal saveNewMeal={saveNewMeal} closeAddMealModal={() => setShowAddModal(false)} />
                 </dialog>
             </div>
             <div className="hidden w-full md:flex justify-center">
