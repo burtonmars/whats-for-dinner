@@ -100,7 +100,6 @@ useEffect(() => {
   };
   
   const onSubmit: SubmitHandler<Meal> = async (newMeal: Meal) => {
-    console.log('submitting')
       setSaving(true);
       try {
           if (imageFile) {

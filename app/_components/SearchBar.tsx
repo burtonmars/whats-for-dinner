@@ -35,14 +35,6 @@ const SearchBar = ({ meals, userId }: SearchBarProps) => {
         setInputText(lowerCase);
     };
 
-    const openViewMealModal = () => {
-        setShowModal(true);
-    };
-
-    const closeViewMealModal = () => {
-        setShowModal(false);
-    };
-
     const filteredMeals = meals.filter((meal) => {
         if (inputText === '') {
             return '';
@@ -68,7 +60,7 @@ const SearchBar = ({ meals, userId }: SearchBarProps) => {
             {filteredMeals.map((meal) => (
                 <li key={meal.id} onClick={() => {
                     setSelectedMeal(meal);
-                    openViewMealModal();
+                    setShowModal(true);
                     setIsDropdownVisible(false);
                 }} className='p-2 hover:bg-gray-100 cursor-pointer'>
                     {meal.mainTitle}
@@ -77,7 +69,7 @@ const SearchBar = ({ meals, userId }: SearchBarProps) => {
         </ul>
         )}
         <dialog id="view_meal_modal" className="modal" open={showModal}>
-            {selectedMeal && <ViewMealModal meal={selectedMeal} closeModal={closeViewMealModal} />}
+            {selectedMeal && <ViewMealModal meal={selectedMeal} closeModal={() => setShowModal(false)} />}
         </dialog>
     </div>
   )
