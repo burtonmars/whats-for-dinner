@@ -15,7 +15,7 @@ interface HeaderProps {
 
 const Header = ({ userId, meals }: HeaderProps) => {
   const [showAddModal, setShowAddModal] = useState(false);
-  const maxDemoMealCount = 4;
+  const maxDemoMealCount = 15;
 
   return (
     <nav className="navbar flex-col md:flex-row w-full justify-around lg:px-16 xl:w-3/4">
