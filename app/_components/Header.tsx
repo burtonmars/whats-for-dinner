@@ -3,6 +3,8 @@
 import React, { useState } from 'react';
 import AddMealModal from './AddMealModal';
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
+import { usePathname } from 'next/navigation'
+import Link from 'next/link';
 
 import { saveNewMeal } from '../_lib/data';
 import { Meal } from '../_lib/definitions';
@@ -16,6 +18,7 @@ interface HeaderProps {
 const Header = ({ userId, meals }: HeaderProps) => {
   const [showAddModal, setShowAddModal] = useState(false);
   const maxDemoMealCount = 15;
+  const pathname = usePathname();
 
   return (
     <nav className="navbar flex-col md:flex-row w-full justify-around lg:px-16 xl:w-3/4">
@@ -37,9 +40,16 @@ const Header = ({ userId, meals }: HeaderProps) => {
         </div>
         <div className='flex w-full justify-between my-4 px-4'>
             <div className='flex h-full w-5/6 md:w-full items-center'>
-                <button className="btn btn-primary text-xl" disabled={!userId || meals.length >= maxDemoMealCount} onClick={() => setShowAddModal(true)}>
-                    new meal
-                </button>
+                {pathname === '/' &&
+                    <button className="btn btn-primary text-xl" disabled={!userId || meals.length >= maxDemoMealCount} onClick={() => setShowAddModal(true)}>
+                        new meal
+                    </button>
+                }
+                {pathname !== '/' && 
+                    <div>
+                        <Link href="/">Back</Link>
+                    </div>
+                }
                 {meals.length >= maxDemoMealCount && <span className='text-red-500 text-sm ml-2'>You have reached the maximum number of meals for the demo account.</span>}
                 <dialog id="add_meal_modal" className="modal" open={showAddModal}>
                     <AddMealModal saveNewMeal={saveNewMeal} closeAddMealModal={() => setShowAddModal(false)} />

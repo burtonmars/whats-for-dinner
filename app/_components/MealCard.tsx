@@ -2,10 +2,11 @@
 
 import React, { useState } from 'react';
 import { Image } from 'cloudinary-react';
-
+ 
 import ViewMealModal from './ViewMealModal';
 import { Meal } from '../_lib/definitions';
 import { navigateHome } from '../_lib/actions';
+import Link from 'next/link';
 
 interface MealCardProps {
     meal: Meal;
@@ -54,7 +55,7 @@ const MealCard = ({meal, deleteMeal}: MealCardProps) => {
             <div className='h-1/4 overflow-auto'>
                 <ul className='flex flex-wrap gap-2'>
                     {meal.tags.map((tag) => 
-                        <li key={tag} className='badge mx-1 h-6 bg-accent border-none'>{tag}</li>
+                        <li key={tag} className='badge mx-1 h-6 bg-accent border-none'><Link href={`/filtered-meals/${tag}`}>{tag}</Link></li>
                     )}
                 </ul>
             </div>
