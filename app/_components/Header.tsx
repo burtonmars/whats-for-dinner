@@ -46,7 +46,7 @@ const Header = ({ userId, meals }: HeaderProps) => {
                     </button>
                 }
                 {pathname !== '/' && 
-                    <div className='btn btn-accent text-md xl:text-lg w-2/5'>
+                    <div className='btn btn-accent text-md xl:text-lg w-3/5 md:w-2/5 lg:w-3/5 xl:w-2/5'>
                         <Link href="/">Back</Link>
                     </div>
                 }
