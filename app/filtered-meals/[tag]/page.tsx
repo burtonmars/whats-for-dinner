@@ -10,11 +10,10 @@ export default async function Page({ params }: { params: { tag: string } }) {
   const tag = decodeURIComponent(params.tag);
   const meals: Meal[] = await fetchMeals();
   const filteredMeals = meals.filter(meal => meal.tags.includes(tag));
-  console.log(tag);
   
   return (
-    <div className='w-full h-full mt-10 md:mt-0'>
-        <MealsCollection meals={filteredMeals}></MealsCollection>
+    <div className='flex flex-col items-center w-full h-full mt-10 md:mt-0'>
+        <MealsCollection meals={filteredMeals} tag={tag}></MealsCollection>
     </div>
   )
 }

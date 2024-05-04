@@ -1,7 +1,6 @@
 import React from 'react';
 
-import MealCard from './_components/MealCard';
-import { deleteMeal, fetchMeals } from './_lib/data';
+import { fetchMeals } from './_lib/data';
 import { Meal } from './_lib/definitions';
 import MealsCollection from './_components/MealsCollection';
 
@@ -10,7 +9,7 @@ export default async function Page() {
   
   return (
     <div className='w-full h-full mt-10 md:mt-0'>
-        <MealsCollection meals={meals}></MealsCollection>
+        <MealsCollection meals={meals} tag={null}></MealsCollection>
     </div>
   )
 }

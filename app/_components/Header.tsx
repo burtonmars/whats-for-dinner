@@ -41,12 +41,12 @@ const Header = ({ userId, meals }: HeaderProps) => {
         <div className='flex w-full justify-between my-4 px-4'>
             <div className='flex h-full w-5/6 md:w-full items-center'>
                 {pathname === '/' &&
-                    <button className="btn btn-primary text-xl" disabled={!userId || meals.length >= maxDemoMealCount} onClick={() => setShowAddModal(true)}>
+                    <button className="btn btn-primary text-lg w-1/3" disabled={!userId || meals.length >= maxDemoMealCount} onClick={() => setShowAddModal(true)}>
                         new meal
                     </button>
                 }
                 {pathname !== '/' && 
-                    <div>
+                    <div className='btn btn-accent text-lg w-1/3'>
                         <Link href="/">Back</Link>
                     </div>
                 }

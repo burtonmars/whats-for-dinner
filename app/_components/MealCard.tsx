@@ -11,20 +11,13 @@ import Link from 'next/link';
 interface MealCardProps {
     meal: Meal;
     deleteMeal: any;
+    focussedTag: string | null;
 }
 
-const MealCard = ({meal, deleteMeal}: MealCardProps) => {
+const MealCard = ({meal, deleteMeal, focussedTag}: MealCardProps) => {
     const [showModal, setShowModal] = useState(false);
     const [saving, setSaving] = useState(false);
     const demoMealIds = [74, 75, 77];
-
-    const openModal = () => {
-        setShowModal(true);
-    };
-
-    const closeModal = () => {
-        setShowModal(false);
-    };
         
     const handleDelete = async () => {
         if (demoMealIds.includes(meal.id)) {
@@ -44,7 +37,7 @@ const MealCard = ({meal, deleteMeal}: MealCardProps) => {
     
   return (
     <div className="card card-compact mb-12 md:mb-0 mx-12 w-5/6 lg:w-96 bg-base-100 shadow-xl h-[550px]">
-        <figure className="w-full h-1/2">
+        <figure className="w-full h-1/2 cursor-pointer" onClick={() => setShowModal(true)}>
             <Image className="w-full h-full object-cover" cloudName="dv54qhjnt" publicId={meal.imagePath}/>
         </figure>
         <div className="card-body flex flex-col justify-between h-2/5">
@@ -54,9 +47,17 @@ const MealCard = ({meal, deleteMeal}: MealCardProps) => {
             </div>
             <div className='h-1/4 overflow-auto'>
                 <ul className='flex flex-wrap gap-2'>
-                    {meal.tags.map((tag) => 
-                        <li key={tag} className='badge mx-1 h-6 bg-accent border-none'><Link href={`/filtered-meals/${tag}`}>{tag}</Link></li>
-                    )}
+                    {meal.tags.map((tag) => (
+                        focussedTag && tag === focussedTag ? (
+                            <li key={tag} className='badge mx-1 h-6 bg-primary border-none'>
+                                <Link href={`/filtered-meals/${tag}`}>{tag}</Link>
+                            </li>
+                        ) : (
+                            <li key={tag} className='badge mx-1 h-6 bg-accent border-none'>
+                                <Link href={`/filtered-meals/${tag}`}>{tag}</Link>
+                            </li>
+                        )
+                    ))}
                 </ul>
             </div>
             <div className="card-actions mt-2 p-4">
@@ -64,9 +65,9 @@ const MealCard = ({meal, deleteMeal}: MealCardProps) => {
                     <form action={navigateHome}>
                         <button onClick={handleDelete} className='btn btn-outline btn-error w-24' disabled={saving}>{saving ? 'deleting...' : 'delete'}</button>
                     </form>
-                    <button className="btn btn-secondary w-30" onClick={openModal}>view meal</button>
+                    <button className="btn btn-secondary w-30" onClick={() => setShowModal(false)}>view meal</button>
                     <dialog id="view_meal_modal" className="modal" open={showModal}>
-                        <ViewMealModal meal={meal} closeModal={closeModal} />
+                        <ViewMealModal meal={meal} closeModal={() => setShowModal(false)} />
                     </dialog>
                 </div>
             </div>
