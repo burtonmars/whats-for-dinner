@@ -20,6 +20,13 @@ const config: Config = {
         mealCardsXl: 'repeat(3, minmax(250px, 1fr))',
       },
     },
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '2036px',
+    },
   },
   plugins: [require('daisyui')],
   daisyui: {
