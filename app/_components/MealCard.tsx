@@ -65,7 +65,7 @@ const MealCard = ({meal, deleteMeal, focussedTag}: MealCardProps) => {
                     <form action={navigateHome}>
                         <button onClick={handleDelete} className='btn btn-outline btn-error w-24' disabled={saving}>{saving ? 'deleting...' : 'delete'}</button>
                     </form>
-                    <button className="btn btn-secondary w-30" onClick={() => setShowModal(false)}>view meal</button>
+                    <button className="btn btn-secondary w-30" onClick={() => setShowModal(true)}>view meal</button>
                     <dialog id="view_meal_modal" className="modal" open={showModal}>
                         <ViewMealModal meal={meal} closeModal={() => setShowModal(false)} />
                     </dialog>
