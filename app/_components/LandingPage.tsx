@@ -24,7 +24,7 @@ const LandingPage = () => {
 
   const imagePath = 'https://res.cloudinary.com/dv54qhjnt/image/upload/v1712097910/salmon_dinner_qkzoe1.jpg'
   return (
-    <div className='card card-compact my-10 md:my-24 w-5/6 lg:w-96 bg-base-100 shadow-xl h-[560px]'>
+    <div className='card card-compact my-10 md:my-24 w-5/6 lg:w-96 bg-base-100 shadow-xl h-[560px] max-w-[400px]'>
        <figure className="w-full h-1/2">
             <Image className="w-full h-full object-cover" cloudName="dv54qhjnt" publicId={imagePath}/>
         </figure>
