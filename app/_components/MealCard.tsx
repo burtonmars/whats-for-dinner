@@ -7,6 +7,8 @@ import ViewMealModal from './ViewMealModal';
 import { Meal } from '../_lib/definitions';
 import { navigateHome } from '../_lib/actions';
 import Link from 'next/link';
+import AreYouSureModal from './AreYouSureModal';
+import { set } from 'react-hook-form';
 
 interface MealCardProps {
     meal: Meal;
@@ -17,6 +19,7 @@ interface MealCardProps {
 const MealCard = ({meal, deleteMeal, focussedTag}: MealCardProps) => {
     const [showModal, setShowModal] = useState(false);
     const [saving, setSaving] = useState(false);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
     const demoMealIds = [74, 75, 77];
         
     const handleDelete = async () => {
@@ -32,6 +35,7 @@ const MealCard = ({meal, deleteMeal, focussedTag}: MealCardProps) => {
         } finally {
             navigateHome();
             setSaving(false);
+            setShowDeleteModal(false);
         }
     };
     
@@ -63,7 +67,7 @@ const MealCard = ({meal, deleteMeal, focussedTag}: MealCardProps) => {
             <div className="card-actions mt-2 p-4">
                 <div className='flex w-full justify-between'>
                     <form action={navigateHome}>
-                        <button onClick={handleDelete} className='btn btn-outline btn-error w-24' disabled={saving}>{saving ? 'deleting...' : 'delete'}</button>
+                        <button onClick={() => setShowDeleteModal(true)} className='btn btn-outline btn-error w-24' disabled={saving}>{saving ? 'deleting...' : 'delete'}</button>
                     </form>
                     <button className="btn btn-secondary w-30" onClick={() => setShowModal(true)}>view meal</button>
                     <dialog id="view_meal_modal" className="modal" open={showModal}>
@@ -72,6 +76,9 @@ const MealCard = ({meal, deleteMeal, focussedTag}: MealCardProps) => {
                 </div>
             </div>
         </div>
+        <dialog id="delete_meal_modal" className="modal" open={showDeleteModal}>
+            <AreYouSureModal handleDelete={handleDelete} setShowDeleteModal={setShowDeleteModal} mealTitle={meal.mainTitle}/>
+        </dialog>
     </div>
   );
 };
