@@ -3,6 +3,7 @@
 import { SignInButton, useSignIn } from '@clerk/nextjs'
 import React from 'react'
 import { Image } from 'cloudinary-react';
+import { motion } from 'framer-motion';
 
 const LandingPage = () => {
     const { signIn } = useSignIn();
@@ -24,7 +25,16 @@ const LandingPage = () => {
 
   const imagePath = 'https://res.cloudinary.com/dv54qhjnt/image/upload/v1712097910/salmon_dinner_qkzoe1.jpg'
   return (
-    <div className='card card-compact my-10 md:my-24 w-5/6 lg:w-96 bg-base-100 shadow-xl h-[560px] max-w-[400px]'>
+    <motion.div 
+        className='card card-compact my-10 md:my-24 w-5/6 lg:w-96 bg-base-100 shadow-xl h-[560px] max-w-[400px]'
+        initial={{
+            opacity: 0,
+            scale: 0.8
+        }}
+        animate={{
+            opacity: 1,
+            scale: 1
+        }}>
        <figure className="w-full h-1/2">
             <Image className="w-full h-full object-cover" cloudName="dv54qhjnt" publicId={imagePath}/>
         </figure>
@@ -45,7 +55,7 @@ const LandingPage = () => {
                 </div>
             </div>
         </div>
-    </div>
+    </motion.div>
   )
 }
 

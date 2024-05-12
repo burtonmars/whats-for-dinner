@@ -8,7 +8,7 @@ import { Meal } from '../_lib/definitions';
 import { navigateHome } from '../_lib/actions';
 import Link from 'next/link';
 import AreYouSureModal from './AreYouSureModal';
-import { set } from 'react-hook-form';
+import { motion } from 'framer-motion';
 
 interface MealCardProps {
     meal: Meal;
@@ -40,7 +40,20 @@ const MealCard = ({meal, deleteMeal, focussedTag}: MealCardProps) => {
     };
     
   return (
-    <div className="card card-compact mb-12 md:mb-0 mx-12 w-5/6 lg:w-96 bg-base-100 shadow-xl h-[550px]">
+    <motion.div 
+        className="card card-compact mb-12 md:mb-0 mx-12 w-5/6 lg:w-96 bg-base-100 shadow-xl h-[550px]"
+        initial={{
+            opacity: 0,
+            scale: 0.8
+        }}
+        animate={{
+            opacity: 1,
+            scale: 1
+        }}
+        transition={{
+            duration: 0.2
+        }}
+        >
         <figure className="w-full h-1/2 cursor-pointer" onClick={() => setShowModal(true)}>
             <Image className="w-full h-full object-cover" cloudName="dv54qhjnt" publicId={meal.imagePath}/>
         </figure>
@@ -79,7 +92,7 @@ const MealCard = ({meal, deleteMeal, focussedTag}: MealCardProps) => {
         <dialog id="delete_meal_modal" className="modal" open={showDeleteModal}>
             <AreYouSureModal handleDelete={handleDelete} setShowDeleteModal={setShowDeleteModal} mealTitle={meal.mainTitle}/>
         </dialog>
-    </div>
+    </motion.div>
   );
 };
 
