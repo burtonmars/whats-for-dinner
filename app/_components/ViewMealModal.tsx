@@ -23,7 +23,8 @@ const ViewMealModal = ({ meal, closeModal }: MealModalProps) => {
         setNotes(meal.notes);
     }, [meal])
 
-const handleSubmit = async () => {
+const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     setSaving(true);
     try {
         meal.notes = notes;

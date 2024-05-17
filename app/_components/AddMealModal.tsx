@@ -95,7 +95,6 @@ useEffect(() => {
   };
 
   const removeIngredient = (indexToRemove: number) => {
-    console.log(errors)
     setNewMealIngredients(newMealIngredients.filter((_, index) => index !== indexToRemove));
   };
   
